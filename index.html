@@ -26,14 +26,14 @@
     <title>Vue Boolzap 📨</title>
   </head>
   <body>
-    <!-- inizio container  -->
-    <div class="main_container">
+    <!-- inizio Main container  -->
+    <div id="root" class="main_container">
       <!-- inizio container left  -->
       <div class="left_container">
         <!-- my account DIv  -->
         <div class="my_account_div">
           <div class="left-icons">
-            <img src="img/avatar_1.jpg" alt="Avatar 1" />
+            <img src="img/avatar_8.jpg" alt="Avatar 1" />
             <div class="username">Luca Ciprani</div>
           </div>
           <div class="right-icons">
@@ -69,55 +69,28 @@
         <div class="list_chat_div">
           <ul>
             <li>
-              <div class="left-icons">
-                <img src="img/avatar_2.jpg" alt="Avatar 2" />
+              <div v-for="(contact, index) in contacts" class="left-icons">
+                <img
+                  :src="'img/avatar' + contact.avatar + '.jpg'"
+                  alt="Avatar 2"
+                />
                 <div class="info">
-                  <div class="username">Michele</div>
-                  <div class="message_text">message here</div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div class="left-icons">
-                <img src="img/avatar_4.jpg" alt="Avatar 4" />
-                <div class="info">
-                  <div class="username">Aldo</div>
-                  <div class="message_text">message here</div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div class="left-icons">
-                <img src="img/avatar_5.jpg" alt="Avatar 5" />
-                <div class="info">
-                  <div class="username">Marco</div>
-                  <div class="message_text">message here</div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div class="left-icons">
-                <img src="img/avatar_6.jpg" alt="Avatar 6" />
-                <div class="info">
-                  <div class="username">Luisa</div>
-                  <div class="message_text">message here</div>
+                  <div class="username">{{contact.name}}</div>
+                  <div class="message_text">{{contact.messages[1]}}</div>
                 </div>
               </div>
             </li>
           </ul>
         </div>
-        <!-- fine container left  -->
+        <!-- fine left container -->
       </div>
 
       <!-- inizio container right  -->
       <div class="right_container">
-        <!-- name urrent chat  -->
-        <div class="name_current_chat_div">
-          <div class="left-icons">
-            <img src="img/avatar_2.jpg" alt="Avatar 2" />
+        <!-- name current chat  -->
+        <div class="name_current_chat_div" >
+          <div class="left-icons" @click="activeAChat(index)">
+            <img src="img/avatar_1.jpg" alt="Avatar 2" />
             <div class="username">Michele</div>
           </div>
           <div class="right-icons">
@@ -127,16 +100,31 @@
           </div>
         </div>
         <!-- chat  -->
-        <div class="chat"></div>
+        <div class="chat" >
+   
+          <div  v-for="(singleMessage, index) in contacts[activeChat].messages" >
+            <div class="my-message" v-if="singleMessage.status =='sent' " > 
+              <span >{{singleMessage.message}}</span>
+            </div>
+            <div class="interlocutor" v-else="">
+                <span>{{singleMessage.message}}</span>
+            </div>
+          </div>
+         
+        </div>
         <!-- typing chat  -->
         <div class="typing_chat_div">
           <i class="far fa-grin-alt"></i>
-          <input placeholder="Scrivi un messaggio" type="text" />
+          <input
+            placeholder="Scrivi un messaggio"
+            type="text"
+            @keyUp.enter="addMessage"
+          />
           <i class="fas fa-microphone"></i>
         </div>
-        <!-- fine container right  -->
+        <!-- fine right container -->
       </div>
-      <!-- fine container  -->
+      <!-- fine Main container  -->
     </div>
 
     <!-- importazione js  -->

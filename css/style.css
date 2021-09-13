@@ -57,6 +57,7 @@ i:hover,
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-left: 10px;
 }
 .right-icons .fas{
     margin: 4px 7px;
@@ -109,7 +110,7 @@ i:hover,
     background-color: #FFFFFF;  
     height: 74%;
     width: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 .list_chat_div ul li{
     list-style: none;
@@ -138,7 +139,26 @@ i:hover,
     background-image: url(../img/mine.jpg);
     height: 82%;
     width: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
+}
+
+.interlocutor{
+    min-height: 25px;
+    width: 40%;
+    background-color: white;
+    margin: 20px 20px 10px 40px;
+    padding: 10px;
+    font-size: 90%;
+}
+
+.my-message{
+    min-height: 25px;
+    width: 40%;
+    background-color: #DBF8C7;
+    margin: 20px 0 20px 50%;
+    padding: 10px;
+    font-size: 90%;
+
 }
 /* typing chat div  */
 .typing_chat_div{
