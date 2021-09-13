@@ -4,6 +4,10 @@ Vue.config.devtools = true;
 const app = new Vue({
   el: "#root",
   data: {
+    user: {
+      name: 'Luca Ciprani',
+      avatar: '_8',
+    },
     newMessage: "",
     activeChat: 0,
     contacts: [

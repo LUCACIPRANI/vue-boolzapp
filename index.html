@@ -26,15 +26,18 @@
     <title>Vue Boolzap 📨</title>
   </head>
   <body>
-    <!-- inizio Main container  -->
+    <!-- inizio MAIN CONTAINER  -->
     <div id="root" class="main_container">
-      <!-- inizio container left  -->
+      <!-- inizio CONTAINER LEFT  -->
       <div class="left_container">
         <!-- my account DIv  -->
-        <div class="my_account_div">
+        <div class="my_account">
           <div class="left-icons">
-            <img src="img/avatar_8.jpg" alt="Avatar 1" />
-            <div class="username">Luca Ciprani</div>
+            <img
+              :src="'img/avatar' + user.avatar + '.jpg'"
+              alt="Avatar image"
+            />
+            <div class="username">{{user.name}}</div>
           </div>
           <div class="right-icons">
             <i class="fas fa-circle-notch"></i>
@@ -43,7 +46,7 @@
           </div>
         </div>
         <!-- mute DIV -->
-        <div class="mute_div">
+        <div class="mute">
           <div class="bell">
             <i class="fas fa-bell-slash"></i>
           </div>
@@ -61,22 +64,28 @@
           </div>
         </div>
         <!-- chat search div  -->
-        <div class="chat_search_div">
+        <div class="chat_search">
           <i class="fas fa-search"></i>
-          <input type="text" />
+          <input placeholder="Cerca o inizia una nuova chat" type="text" />
         </div>
         <!-- list chat div  -->
-        <div class="list_chat_div">
+        <div class="list_chat">
           <ul>
             <li>
-              <div v-for="(contact, index) in contacts" class="left-icons">
+              <div
+                v-for="(contact, index) in contacts"
+                class="left-icons"
+                @click="activeAChat(index)"
+              >
                 <img
                   :src="'img/avatar' + contact.avatar + '.jpg'"
-                  alt="Avatar 2"
+                  alt="Avatar image"
                 />
                 <div class="info">
                   <div class="username">{{contact.name}}</div>
-                  <div class="message_text">{{contact.messages[1]}}</div>
+                  <div class="message_text">
+                    {{contact.messages[1].message}}
+                  </div>
                 </div>
               </div>
             </li>
@@ -85,14 +94,26 @@
         <!-- fine left container -->
       </div>
 
-      <!-- inizio container right  -->
+      <!-- inizio CONTAINER RIGHT  -->
       <div class="right_container">
         <!-- name current chat  -->
-        <div class="name_current_chat_div" >
-          <div class="left-icons" @click="activeAChat(index)">
-            <img src="img/avatar_1.jpg" alt="Avatar 2" />
-            <div class="username">Michele</div>
+
+        <div class="name_current_chat">
+          <div
+            v-for="(contact, index) in contacts"
+            class="left-icons"
+            @click="activeAChat(index)"
+          >
+            <img
+              :src="'img/avatar' + contact.avatar + '.jpg'"
+              alt="Avatar image"
+            />
+            <div class="info">
+              <div class="username">{{contact.name}}</div>
+              <div style="color: #b5b5b5" class="message_text">last seen</div>
+            </div>
           </div>
+
           <div class="right-icons">
             <i class="fas fa-search"></i>
             <i class="fas fa-paperclip"></i>
@@ -100,20 +121,28 @@
           </div>
         </div>
         <!-- chat  -->
-        <div class="chat" >
-   
-          <div  v-for="(singleMessage, index) in contacts[activeChat].messages" >
-            <div class="my-message" v-if="singleMessage.status =='sent' " > 
-              <span >{{singleMessage.message}}</span>
+        <div class="chat">
+          <div v-for="(singleMessage, index) in contacts[activeChat].messages">
+            <div class="my-message" v-if="singleMessage.status =='sent' ">
+              <span
+                >{{singleMessage.message}}
+                <h6 style="color: #cecece; font-size: 10px; text-align: end">
+                  {{singleMessage.date}}
+                </h6>
+              </span>
             </div>
-            <div class="interlocutor" v-else="">
-                <span>{{singleMessage.message}}</span>
+            <div class="received-message" v-else="">
+              <span
+                >{{singleMessage.message}}
+                <h6 style="color: #cecece; font-size: 10px; text-align: end">
+                  {{singleMessage.date}}
+                </h6>
+              </span>
             </div>
           </div>
-         
         </div>
         <!-- typing chat  -->
-        <div class="typing_chat_div">
+        <div class="typing_chat">
           <i class="far fa-grin-alt"></i>
           <input
             placeholder="Scrivi un messaggio"
