@@ -30,7 +30,7 @@
     <div id="root" class="main_container">
       <!-- inizio CONTAINER LEFT  -->
       <div class="left_container">
-        <!-- my account DIv  -->
+        <!-- my account  -->
         <div class="my_account">
           <div class="left-icons">
             <img
@@ -45,7 +45,7 @@
             <i class="fas fa-ellipsis-v"></i>
           </div>
         </div>
-        <!-- mute DIV -->
+        <!-- mute -->
         <div class="mute">
           <div class="bell">
             <i class="fas fa-bell-slash"></i>
@@ -63,19 +63,19 @@
             >
           </div>
         </div>
-        <!-- chat search div  -->
+        <!-- chat search  -->
         <div class="chat_search">
           <i class="fas fa-search"></i>
           <input placeholder="Cerca o inizia una nuova chat" type="text" />
         </div>
-        <!-- list chat div  -->
+        <!-- list chat  -->
         <div class="list_chat">
           <ul>
             <li>
               <div
                 v-for="(contact, index) in contacts"
                 class="left-icons"
-                @click="activeAChat(index)"
+                @click="activateChat(index)"
               >
                 <img
                   :src="'img/avatar' + contact.avatar + '.jpg'"
@@ -96,21 +96,18 @@
 
       <!-- inizio CONTAINER RIGHT  -->
       <div class="right_container">
-        <!-- name current chat  -->
-
+        <!-- name current chat -->
         <div class="name_current_chat">
-          <div
-            v-for="(contact, index) in contacts"
-            class="left-icons"
-            @click="activeAChat(index)"
-          >
+          <div class="left-icons">
             <img
-              :src="'img/avatar' + contact.avatar + '.jpg'"
+              :src="'img/avatar' + contacts[activeChat].avatar + '.jpg'"
               alt="Avatar image"
             />
             <div class="info">
-              <div class="username">{{contact.name}}</div>
-              <div style="color: #b5b5b5" class="message_text">last seen</div>
+              <div class="username">{{contacts[activeChat].name}}</div>
+              <div style="color: #b5b5b5" class="message_text">
+                ultimo accesso alle ore {{contacts[activeChat].date}}
+              </div>
             </div>
           </div>
 
@@ -120,7 +117,7 @@
             <i class="fas fa-ellipsis-v"></i>
           </div>
         </div>
-        <!-- chat  -->
+        <!-- chat -->
         <div class="chat">
           <div v-for="(singleMessage, index) in contacts[activeChat].messages">
             <div class="my-message" v-if="singleMessage.status =='sent' ">
@@ -130,6 +127,7 @@
                   {{singleMessage.date}}
                 </h6>
               </span>
+              <i class="fas fa-angle-down"></i>
             </div>
             <div class="received-message" v-else="">
               <span
@@ -147,7 +145,8 @@
           <input
             placeholder="Scrivi un messaggio"
             type="text"
-            @keyUp.enter="addMessage"
+            v-model="newMessage"
+            @keyUp.enter="typeMessage"
           />
           <i class="fas fa-microphone"></i>
         </div>

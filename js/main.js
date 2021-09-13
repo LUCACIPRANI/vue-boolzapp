@@ -5,8 +5,8 @@ const app = new Vue({
   el: "#root",
   data: {
     user: {
-      name: 'Luca Ciprani',
-      avatar: '_8',
+      name: "Luca Ciprani",
+      avatar: "_8",
     },
     newMessage: "",
     activeChat: 0,
@@ -56,6 +56,28 @@ const app = new Vue({
         ],
       },
       {
+        name: "Alberto",
+        avatar: "_4",
+        visible: true,
+        messages: [
+          {
+            date: "18/03/2020 20:30:00",
+            message: "Hola! Que tal?",
+            status: "received",
+          },
+          {
+            date: "20/03/2020 20:37:55",
+            message: "todo bien! gracias y tu? vamos a salir por la noche?",
+            status: "sent",
+          },
+          {
+            date: "20/03/2020 20:55:00",
+            message: "Me gustaria mucho, la verdad, pero hoy no puedo, tengo que estudiar por el examen de mañaña 🙃",
+            status: "received",
+          },
+        ],
+      },
+      {
         name: "Samuele",
         avatar: "_3",
         visible: true,
@@ -94,24 +116,63 @@ const app = new Vue({
           },
         ],
       },
+      {
+        name: "Jenny",
+        avatar: "_6",
+        visible: true,
+        messages: [
+          {
+            date: "09/06/2020 12:30:55",
+            message: "Let's take a beer tonight🍺",
+            status: "sent",
+          },
+          {
+            date: "09/06/2020 12:50:32",
+            message: "Yes sure! what about 6.30 in front of the underground ?",
+            status: "received",
+          },
+          {
+            date: "09/06/2020 13:11:01",
+            message: "Great!! See you later 😃",
+            status: "sent",
+          },
+        ],
+      },
     ],
   },
   methods: {
-    // milestone 1
-    activeAChat(index) {
-        this.activeChat = index;
+    activateChat(index) {
+      this.activeChat = index;
     },
-    myMessage() {},
-    // milestone 2
-    clickContact() {},
-    // milestone 3
-    typeAMessage() {
+    typeMessage() {
       if (this.newMessage != "") {
-        this.contacts.message.push({ message: this.newMessage });
+        this.contacts[this.activeChat].messages.push({
+          date: new Date(),
+          message: this.newMessage,
+          status: "sent",
+        });
+        this.enterMessage();
+        this.receiveAnswer();
         this.newMessage = "";
       }
     },
-    interlocutorAnswer() {},
+    enterMessage() {
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "enter") {
+          typeMessage();
+        }
+      });
+    },
+    receiveAnswer() {
+      // set Timeout
+      setTimeout(() => {
+        this.contacts[this.activeChat].messages.push({
+          date: new Date(),
+          message: "ok!",
+          status: "received",
+        });
+      }, 2000);
+    },
     // milestone 4
     userResearch() {},
     // milestone 5
