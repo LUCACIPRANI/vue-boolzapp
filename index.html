@@ -21,6 +21,8 @@
     />
     <!-- importazione Vue.js  -->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- import day.js Library  -->
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <!-- importazione file CSS  -->
     <link rel="stylesheet" href="css/style.css" />
     <title>Vue Boolzap 📨</title>
@@ -66,7 +68,11 @@
         <!-- chat search  -->
         <div class="chat_search">
           <i class="fas fa-search"></i>
-          <input placeholder="Cerca o inizia una nuova chat" type="text" />
+          <input
+            class="input"
+            placeholder="Cerca o inizia una nuova chat"
+            type="text"
+          />
         </div>
         <!-- list chat  -->
         <div class="list_chat">
@@ -75,7 +81,7 @@
               <div
                 v-for="(contact, index) in contacts"
                 class="left-icons"
-                @click="activateChat(index)"
+                @click="setActiveChat(index)"
               >
                 <img
                   :src="'img/avatar' + contact.avatar + '.jpg'"
@@ -84,9 +90,10 @@
                 <div class="info">
                   <div class="username">{{contact.name}}</div>
                   <div class="message_text">
-                    {{contact.messages[1].message}}
+                    {{lastMessage}}
                   </div>
                 </div>
+                <i @click="deleteFriendChat(index)" class="fas fa-trash"></i>
               </div>
             </li>
           </ul>
@@ -106,7 +113,7 @@
             <div class="info">
               <div class="username">{{contacts[activeChat].name}}</div>
               <div style="color: #b5b5b5" class="message_text">
-                ultimo accesso alle ore {{contacts[activeChat].date}}
+                ultimo accesso alle ore {{lastView}}
               </div>
             </div>
           </div>
@@ -127,15 +134,16 @@
                   {{singleMessage.date}}
                 </h6>
               </span>
-              <i class="fas fa-angle-down"></i>
+              <i @click="deleteMessage(index)" class="fas fa-angle-down"></i>
             </div>
-            <div class="received-message" v-else="">
+            <div v-else="" class="received-message">
               <span
                 >{{singleMessage.message}}
                 <h6 style="color: #cecece; font-size: 10px; text-align: end">
                   {{singleMessage.date}}
                 </h6>
               </span>
+              <i @click="deleteMessage(index)" class="fas fa-angle-down"></i>
             </div>
           </div>
         </div>

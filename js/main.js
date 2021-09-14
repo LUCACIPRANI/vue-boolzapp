@@ -8,8 +8,8 @@ const app = new Vue({
       name: "Luca Ciprani",
       avatar: "_8",
     },
-    newMessage: "",
     activeChat: 0,
+    newMessage: "",
     contacts: [
       {
         name: "Michele",
@@ -72,7 +72,8 @@ const app = new Vue({
           },
           {
             date: "20/03/2020 20:55:00",
-            message: "Me gustaria mucho, la verdad, pero hoy no puedo, tengo que estudiar por el examen de mañaña 🙃",
+            message:
+              "Me gustaria mucho, la verdad, pero hoy no puedo, tengo que estudiar por el examen de mañaña 🙃",
             status: "received",
           },
         ],
@@ -128,7 +129,8 @@ const app = new Vue({
           },
           {
             date: "09/06/2020 12:50:32",
-            message: "Yes sure! what about 6.30 in front of the underground ?",
+            message:
+              "Yes sure! what about 6.30 in front of the metro Station ?",
             status: "received",
           },
           {
@@ -141,13 +143,13 @@ const app = new Vue({
     ],
   },
   methods: {
-    activateChat(index) {
+    setActiveChat(index) {
       this.activeChat = index;
     },
     typeMessage() {
       if (this.newMessage != "") {
         this.contacts[this.activeChat].messages.push({
-          date: new Date(),
+          date: dayjs().format("MM-DD-YYYY hh:mm:ss"),
           message: this.newMessage,
           status: "sent",
         });
@@ -164,20 +166,53 @@ const app = new Vue({
       });
     },
     receiveAnswer() {
-      // set Timeout
       setTimeout(() => {
         this.contacts[this.activeChat].messages.push({
-          date: new Date(),
+          date: dayjs().format("MM-DD-YYYY hh:mm:ss"),
           message: "ok!",
           status: "received",
         });
-      }, 2000);
+      }, 1000);
+    },
+    lastView() {
+      // funzione filter + length - 1
+      this.messages(message.length - 1);
+      
+    },
+    lastMessage() {
+      const lastmessage = contacts[activeChat].messages.message;
+      return lastmessage;
     },
     // milestone 4
-    userResearch() {},
+    userResearch() {
+      let results = [];
+      const inputElem = document.querySelector(".input");
+      let toSearch = inputElem.value;
+
+      for (let i = 0; i < this.name.length; i++) {
+        for (key in this.name[i]) {
+          if (this.name[i][key].indexOf(toSearch) != 0) {
+            results.push(this.name[i]);
+          }
+          console.log(results);
+        }
+      }
+    },
+    searchName() {
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "enter") {
+          userResearch();
+        }
+      });
+    },
     // milestone 5
-    deleteMyMessage() {},
+    deleteFriendChat(index) {
+      this.contacts.splice(index, 1);
+    },
+    deleteMessage(index) {
+      this.messages.splice(index, 1);
+    },
     showTime() {},
-    showStatus() {},
+    lastSideMessage() {},
   },
 });
