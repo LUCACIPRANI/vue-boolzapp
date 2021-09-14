@@ -53,16 +53,11 @@
             <i class="fas fa-bell-slash"></i>
           </div>
           <div class="text">
-            <h5 style="font-weight: 400">Ricevi notifiche di nuovi messaggi</h5>
-            <span
-              style="
-                text-decoration: underline;
-                font-size: 11px;
-                color: #81a29a;
-              "
-            >
-              Attiva notifiche desktop</span
-            >
+            <h5 style="font-weight: 400">Get notified of new messages</h5>
+            <span style="font-size: 13px">
+              Turn on desktop notifications
+              <i class="fas fa-angle-down"></i>
+            </span>
           </div>
         </div>
         <!-- chat search  -->
@@ -70,13 +65,19 @@
           <i class="fas fa-search"></i>
           <input
             class="input"
-            placeholder="Cerca o inizia una nuova chat"
+            placeholder="Search o start a new chat"
             type="text"
+            v-model="inputSearch"
+            @keyUp.enter="chatSearch()"
           />
         </div>
         <!-- list chat  -->
         <div class="list_chat">
           <ul>
+            <div class="archived_chat">
+              <i class="far fa-window-maximize"></i> Archived
+              <i class="fas fa-arrow-down"></i>
+            </div>
             <li>
               <div
                 v-for="(contact, index) in contacts"
@@ -89,11 +90,15 @@
                 />
                 <div class="info">
                   <div class="username">{{contact.name}}</div>
+                  <span class="message_Date">
+                    {{getLastMessageChatDate(index)}}
+                  </span>
                   <div class="message_text">
-                    {{lastMessage}}
+                    {{getLastViewMessage(index)}}
+                    <!-- {{contact.messages[contact.messages.length -1].message}} -->
                   </div>
                 </div>
-                <i @click="deleteFriendChat(index)" class="fas fa-trash"></i>
+                <i @click="deleteChat(index)" class="fas fa-trash"></i>
               </div>
             </li>
           </ul>
@@ -113,25 +118,27 @@
             <div class="info">
               <div class="username">{{contacts[activeChat].name}}</div>
               <div style="color: #b5b5b5" class="message_text">
-                ultimo accesso alle ore {{lastView}}
+                last seen at {{getLastMessageDate()}}
               </div>
             </div>
           </div>
 
           <div class="right-icons">
             <i class="fas fa-search"></i>
-            <i class="fas fa-paperclip"></i>
+            <!-- <i class="fas fa-paperclip"></i> -->
             <i class="fas fa-ellipsis-v"></i>
           </div>
         </div>
         <!-- chat -->
         <div class="chat">
+          <div class="day-cloud">Today</div>
           <div v-for="(singleMessage, index) in contacts[activeChat].messages">
             <div class="my-message" v-if="singleMessage.status =='sent' ">
               <span
                 >{{singleMessage.message}}
                 <h6 style="color: #cecece; font-size: 10px; text-align: end">
                   {{singleMessage.date}}
+                  <i v-show="check" v-model="check" class="fas fa-check"> </i>
                 </h6>
               </span>
               <i @click="deleteMessage(index)" class="fas fa-angle-down"></i>
@@ -141,6 +148,7 @@
                 >{{singleMessage.message}}
                 <h6 style="color: #cecece; font-size: 10px; text-align: end">
                   {{singleMessage.date}}
+                  <i class="fas fa-check"></i>
                 </h6>
               </span>
               <i @click="deleteMessage(index)" class="fas fa-angle-down"></i>
@@ -150,8 +158,10 @@
         <!-- typing chat  -->
         <div class="typing_chat">
           <i class="far fa-grin-alt"></i>
+          <i class="fas fa-paperclip"></i>
+
           <input
-            placeholder="Scrivi un messaggio"
+            placeholder="Type a message"
             type="text"
             v-model="newMessage"
             @keyUp.enter="typeMessage"

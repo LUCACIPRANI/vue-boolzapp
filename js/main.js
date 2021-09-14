@@ -10,6 +10,9 @@ const app = new Vue({
     },
     activeChat: 0,
     newMessage: "",
+    inputSearch: "",
+    check: true,
+    checkBlue: false,
     contacts: [
       {
         name: "Michele",
@@ -17,17 +20,20 @@ const app = new Vue({
         visible: true,
         messages: [
           {
-            date: "10/01/2020 15:30:55",
+            // date: "10/01/2020 15:30:55",
+            date: "15:30",
             message: "Hai portato a spasso il cane?",
             status: "sent",
           },
           {
-            date: "10/01/2020 15:50:00",
+            // date: "10/01/2020 15:50:00",
+            date: "15:51",
             message: "Ricordati di dargli da mangiare",
             status: "sent",
           },
           {
-            date: "10/01/2020 16:15:22",
+            // date: "10/01/2020 16:15:22",
+            date: "16:15",
             message: "Tutto fatto!",
             status: "received",
           },
@@ -56,6 +62,29 @@ const app = new Vue({
         ],
       },
       {
+        name: "+34 7766444263",
+        avatar: "_8",
+        visible: true,
+        messages: [
+          {
+            date: "20/03/2020 16:30",
+            message: "Bonjour ca va ? Je suis fabien 😄",
+            status: "sent",
+          },
+          {
+            date: "20/03/2020 16:30:55",
+            message:
+              "ça va bien se passer, dites-moi d'abord, comment est Henry ?",
+            status: "received",
+          },
+          {
+            date: "20/03/2020 16:35:00",
+            message: "Henry est très fatigué, mais il va bien..",
+            status: "sent",
+          },
+        ],
+      },
+      {
         name: "Alberto",
         avatar: "_4",
         visible: true,
@@ -79,7 +108,7 @@ const app = new Vue({
         ],
       },
       {
-        name: "Samuele",
+        name: "+343392227744",
         avatar: "_3",
         visible: true,
         messages: [
@@ -96,6 +125,31 @@ const app = new Vue({
           {
             date: "28/03/2020 16:15:22",
             message: "Ah scusa!",
+            status: "received",
+          },
+        ],
+      },
+      {
+        name: "Frank",
+        avatar: "_4",
+        visible: true,
+        messages: [
+          {
+            // date: "10/01/2020 15:30:55",
+            date: "15:30",
+            message: "Hai portato a spasso il cane?",
+            status: "sent",
+          },
+          {
+            // date: "10/01/2020 15:50:00",
+            date: "15:51",
+            message: "Ricordati di dargli da mangiare",
+            status: "sent",
+          },
+          {
+            // date: "10/01/2020 16:15:22",
+            date: "16:15",
+            message: "Tutto fatto!",
             status: "received",
           },
         ],
@@ -149,7 +203,7 @@ const app = new Vue({
     typeMessage() {
       if (this.newMessage != "") {
         this.contacts[this.activeChat].messages.push({
-          date: dayjs().format("MM-DD-YYYY hh:mm:ss"),
+          date: dayjs().format("hh:mm"),
           message: this.newMessage,
           status: "sent",
         });
@@ -168,51 +222,43 @@ const app = new Vue({
     receiveAnswer() {
       setTimeout(() => {
         this.contacts[this.activeChat].messages.push({
-          date: dayjs().format("MM-DD-YYYY hh:mm:ss"),
+          date: dayjs().format("hh:mm"),
           message: "ok!",
           status: "received",
         });
       }, 1000);
     },
-    lastView() {
-      // funzione filter + length - 1
-      this.messages(message.length - 1);
-      
+    getLastMessageDate() {
+      let currentContact = this.contacts[this.activeChat];
+      return currentContact.messages[currentContact.messages.length - 1].date;
     },
-    lastMessage() {
-      const lastmessage = contacts[activeChat].messages.message;
-      return lastmessage;
+    getLastViewMessage(index) {
+      let currentChatMessage = this.contacts[index];
+      return currentChatMessage.messages[currentChatMessage.messages.length - 1]
+        .message;
+    },
+    getLastMessageChatDate(index) {
+      let currentDateContact = this.contacts[index];
+      return currentDateContact.messages[currentDateContact.messages.length - 1]
+        .date;
     },
     // milestone 4
-    userResearch() {
-      let results = [];
-      const inputElem = document.querySelector(".input");
-      let toSearch = inputElem.value;
-
-      for (let i = 0; i < this.name.length; i++) {
-        for (key in this.name[i]) {
-          if (this.name[i][key].indexOf(toSearch) != 0) {
-            results.push(this.name[i]);
-          }
-          console.log(results);
-        }
-      }
-    },
     searchName() {
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "enter") {
-          userResearch();
-        }
+      this.contacts = this.contacts.filter((contact) => {
+        return contact.name == this.inputSearch;
       });
     },
+    chatSearch() {
+      this.searchName();
+    },
     // milestone 5
-    deleteFriendChat(index) {
+    deleteChat(index) {
       this.contacts.splice(index, 1);
     },
     deleteMessage(index) {
       this.messages.splice(index, 1);
     },
-    showTime() {},
-    lastSideMessage() {},
+    getDay() {},
+    bluCheck() {},
   },
 });
