@@ -18,7 +18,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 90%;
-  width: 80%;
+  width: 85%;
 }
 /* common rules container */
 img {
@@ -59,6 +59,7 @@ i:hover,
   width: 100%;
 }
 .archived_chat {
+  position: relative;
   height: 40px;
   width: 100%;
 }
@@ -68,12 +69,12 @@ i:hover,
   font-size: 20px;
   color: #17bfa5;
 }
-.fa-arrow-down{
-    position: absolute;
-    right: 96.2%;
-    top: 29.3%;
-    font-size: 50%;
-    color: #17bfa5;
+.fa-arrow-down {
+  position: absolute;
+  right: 89.5%;
+  top: 38%;
+  font-size: 50%;
+  color: #17bfa5;
 }
 .left-icons,
 .name_current_chat {
@@ -81,7 +82,7 @@ i:hover,
   align-items: center;
   justify-content: space-between;
   padding-left: 10px;
-  height: 60px;  /* debug  */
+  height: 70px; /* debug  */
 }
 .right-icons .fas {
   margin: 4px 7px;
@@ -95,7 +96,7 @@ i:hover,
   display: flex;
   align-items: center;
   background-color: #8edafb;
-  height: 10%;
+  height: 12%;
   width: 100%;
   font-size: 120%;
 }
@@ -142,13 +143,13 @@ i:hover,
 .list_chat {
   display: flex;
   background-color: #ffffff;
-  height: 73%;
+  height: 71%;
   width: 100%;
   overflow-y: scroll;
 }
 .fa-trash {
   position: absolute;
-  right: 70%;
+  right: 75%;
   color: rgba(0, 0, 0, 0);
 }
 .fa-trash:hover {
@@ -171,17 +172,24 @@ i:hover,
 .list_chat .left-icons:focus {
   background-color: gray;
 }
+.info{
+  position: relative;
+}
 .message_text {
   position: relative;
   color: #c2bdbd;
   font-size: 12px;
   width: 200px;
+  max-height: 30px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .message_Date {
   position: absolute;
-  right: 66%;
+  left: 130%;
   font-size: 70%;
   color: #c2bdbd;
+  overflow-y: hidden;
 }
 /* RIGHT CONTAINER  */
 .right_container {
@@ -207,42 +215,37 @@ i:hover,
   overflow-y: scroll;
   position: relative;
 }
-.day-cloud{
-    position: relative;
-    top: 5%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #E1F3FA;
-    font-size: 75%;
-    text-align: center;
-    width: 10%;
-    padding: 5px;
-    margin-bottom: 30px;
-    border-radius: 20px;
-}
-.my-message {
+.day-cloud {
   position: relative;
-  min-height: 25px;
-  width: 40%;
-  background-color: #dbf8c7;
-  margin: 20px 20px 0px 50%;
-  padding: 10px 5px 2px 10px;
-  font-size: 90%;
-  border-radius: 8px;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #e1f3fa;
+  font-size: 75%;
+  text-align: center;
+  width: 10%;
+  padding: 5px;
+  margin-bottom: 50px;
+  border-radius: 20px;
 }
+.my-message,
 .received-message {
   position: relative;
-  min-height: 25px;
-  width: 40%;
-  background-color: white;
-  margin: 20px 20px 0px 40px;
   padding: 10px 5px 2px 10px;
   font-size: 90%;
   border-radius: 8px;
+  min-height: 25px;
+  width: 40%;
 }
-/* .checkBlue{
-    color: blue;
-} */
+.my-message {
+  background-color: #dbf8c7;
+  margin: 20px 20px 0px 50%;
+}
+.received-message {
+  background-color: white;
+  margin: 20px 20px 0px 40px;
+}
+
 .fa-angle-down {
   position: absolute;
   font-size: 24px;
@@ -254,6 +257,30 @@ i:hover,
 .fa-angle-down:hover {
   color: #c5c5c5;
 }
+.dropDown-Menu {
+  position: absolute;
+  left: 48%;
+  top: 30%;
+  width: 150px;
+  background-color: white;
+  z-index: 999;
+  display: none;
+}
+.dropDown-Menu ul {
+  list-style: none;
+  padding: 5px;
+}
+.dropDown-Menu ul li {
+  padding: 10px;
+}
+.dropDown-Menu ul li:hover,
+.dropDown-Menu button:hover {
+  background-color: #ececec;
+}
+.dropDown-Menu button {
+  border: none;
+  background-color: white;
+}
 
 /* typing chat   */
 .typing_chat {
@@ -264,19 +291,17 @@ i:hover,
   height: 8%;
   width: 100%;
 }
-.typing_chat .fa-grin-alt {
+.typing_chat i {
   color: #6e6e6e;
   font-size: 22px;
+}
+.typing_chat .fa-grin-alt {
   margin: 0 15px;
 }
 .fa-paperclip {
-  font-size: 22px;
   margin-right: 20px;
-  color: #6e6e6e;
 }
 .fa-microphone {
-  color: #6e6e6e;
-  font-size: 22px;
   margin: 0 25px;
 }
 .typing_chat input {

@@ -11,8 +11,7 @@ const app = new Vue({
     activeChat: 0,
     newMessage: "",
     inputSearch: "",
-    check: true,
-    checkBlue: false,
+    found: "",
     contacts: [
       {
         name: "Michele",
@@ -74,7 +73,7 @@ const app = new Vue({
           {
             date: "20/03/2020 16:30:55",
             message:
-              "ça va bien se passer, dites-moi d'abord, comment est Henry ?",
+              "Oui, ça va bien se passer, dites-moi d'abord, comment est Henry ?",
             status: "received",
           },
           {
@@ -202,13 +201,18 @@ const app = new Vue({
     },
     typeMessage() {
       if (this.newMessage != "") {
-        this.contacts[this.activeChat].messages.push({
+        let thisContact = this.contacts[this.activeChat];
+        // salvo la variabile per assicurare lo stesso valore
+        // nel caso cambio chat
+        thisContact.messages.push({
           date: dayjs().format("hh:mm"),
           message: this.newMessage,
           status: "sent",
         });
-        this.enterMessage();
-        this.receiveAnswer();
+        this.receiveAnswer(thisContact);
+        // richiamo la funzione 'ReceiveAnswer' con
+        // il 'thisContact' che ho salvato precedentemente
+        // nell'index, per non salvarlo di nuovo nella funzione in basso
         this.newMessage = "";
       }
     },
@@ -219,14 +223,14 @@ const app = new Vue({
         }
       });
     },
-    receiveAnswer() {
+    receiveAnswer(thisContact) {
       setTimeout(() => {
-        this.contacts[this.activeChat].messages.push({
+        thisContact.messages.push({
           date: dayjs().format("hh:mm"),
           message: "ok!",
           status: "received",
         });
-      }, 1000);
+      }, 2000);
     },
     getLastMessageDate() {
       let currentContact = this.contacts[this.activeChat];
@@ -243,22 +247,31 @@ const app = new Vue({
         .date;
     },
     // milestone 4
+
     searchName() {
-      this.contacts = this.contacts.filter((contact) => {
-        return contact.name == this.inputSearch;
+      return this.contacts.filter((contact) => {
+        return contact.name.toLowerCase().includes(this.inputSearch.toLowerCase());
       });
     },
-    chatSearch() {
-      this.searchName();
-    },
+
     // milestone 5
     deleteChat(index) {
       this.contacts.splice(index, 1);
     },
+    toggleShowInfo(index) {},
     deleteMessage(index) {
       this.messages.splice(index, 1);
     },
     getDay() {},
-    bluCheck() {},
+
+    // scrollToBottom(){
+    //   const messages = document.querySelector('my-message');
+    //   const received = document.querySelector('received-message');
+    //   messages.scrollTop = received.offsetTop - 10;
+    // },
+
+    // scrollToBottom() {
+    //   setInterval(scrollToBottom, 1000);
+    // },
   },
 });
